@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>StackHaus - Gallery</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet"/>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+tailwind.config = {
+theme:{
+extend:{
+colors:{
+primary:"#e67e22",
+soft:"#f5f3ef"
+},
+fontFamily:{
+display:["Inter","sans-serif"]
+},
+borderRadius:{
+lg:"12px",
+xl:"18px"
+}
+}
+}
+}
+</script>
+
+</head>
+
+
+
+<body class="bg-white text-gray-800 font-display min-h-screen flex flex-col">
+
+<div class="flex flex-col min-h-screen w-full max-w-[1440px] mx-auto">
+
+<!-- HEADER -->
+
+<header class="flex items-center justify-between px-6 py-5 border-b bg-white sticky top-0 z-50">
+
+<div class="flex items-center gap-3">
+
+<span class="material-symbols-outlined text-primary text-xl">grid_view</span>
+
+<a href="index.html"
+class="text-m font-semibold tracking-wide">
+
+StackHaus
+
+</a>
+
+</div>
+
+<nav class="hidden md:flex items-center gap-12">
+
+<a class="text-s font-semibold text-gray-600 hover:text-primary"
+href="manifesto.html">ABOUT</a>
+
+<a class="text-s font-semibold text-primary"
+href="case-studies.html">GALLERY</a>
+
+<a class="text-s font-semibold text-gray-600 hover:text-primary"
+href="contact.html">CONTACT</a>
+
+</nav>
+
+<a href="login.html"
+class="bg-primary text-white text-sm px-5 py-2 rounded-lg hover:opacity-90 transition">
+
+Access Portal
+
+</a>
+
+</header>
+
+
+
+<!-- MAIN -->
+
+<main class="flex-grow flex flex-col px-6 md:px-12 py-12 items-center">
+
+<div class="max-w-6xl w-full">
+
+<h1 class="text-4xl md:text-5xl font-bold mb-12 text-gray-900">
+
+Gallery
+
+</h1>
+
+
+
+<!-- GRID -->
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+<!-- CARD 1 -->
+
+<div class="border border-gray-200 bg-soft p-6 rounded-xl hover:shadow-md transition h-64 flex flex-col justify-between">
+
+<div class="flex justify-between items-start">
+
+<span class="text-xs uppercase tracking-wide text-gray-500">
+Sector 7: Mojave
+</span>
+
+<span class="material-symbols-outlined text-primary text-sm">
+landscape
+</span>
+
+</div>
+
+<div class="text-xs text-gray-500 my-4">
+
+Deploy_ID: MJ-2029-A<br/>
+Config: Solar Array + Chill Unit<br/>
+Temp: 112°F / 44°C
+
+</div>
+
+<div class="flex items-center gap-2 text-xs font-semibold text-primary">
+
+<span class="w-2 h-2 bg-primary rounded-full"></span>
+Status: Active
+
+</div>
+
+</div>
+
+
+
+<!-- CARD 2 -->
+
+<div class="border border-gray-200 bg-soft p-6 rounded-xl hover:shadow-md transition h-64 flex flex-col justify-between">
+
+<div class="flex justify-between items-start">
+
+<span class="text-xs uppercase tracking-wide text-gray-500">
+Sector 12: Nordic
+</span>
+
+<span class="material-symbols-outlined text-primary text-sm">
+ac_unit
+</span>
+
+</div>
+
+<div class="text-xs text-gray-500 my-4">
+
+Deploy_ID: ND-2030-X<br/>
+Config: Thermal Core + Geo-Pin<br/>
+Temp: -4°F / -20°C
+
+</div>
+
+<div class="flex items-center gap-2 text-xs font-semibold text-primary">
+
+<span class="w-2 h-2 bg-primary rounded-full"></span>
+Status: Active
+
+</div>
+
+</div>
+
+
+
+<!-- CARD 3 -->
+
+<div class="border border-gray-200 bg-soft p-6 rounded-xl hover:shadow-md transition h-64 flex flex-col justify-between">
+
+<div class="flex justify-between items-start">
+
+<span class="text-xs uppercase tracking-wide text-gray-500">
+Sector 03: Urban
+</span>
+
+<span class="material-symbols-outlined text-primary text-sm">
+location_city
+</span>
+
+</div>
+
+<div class="text-xs text-gray-500 my-4">
+
+Deploy_ID: NY-2028-Z<br/>
+Config: Vertical Stack + Air Filt.<br/>
+Density: High
+
+</div>
+
+<div class="flex items-center gap-2 text-xs text-gray-500">
+
+<span class="w-2 h-2 bg-gray-400 rounded-full"></span>
+Status: Deployed
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+
+
+<!-- FOOTER -->
+
+<footer class="border-t px-6 py-4 text-xs text-gray-500 flex justify-between items-end">
+
+<div class="flex flex-col gap-1">
+
+<span>© 2024 StackHaus</span>
+<span>Archive Access Level: 5</span>
+
+</div>
+
+<div class="text-right hidden sm:block">
+
+<div>Mem: 71TB / 128TB</div>
+<div>CPU: 24% Load</div>
+
+</div>
+
+</footer>
+
+
+</div>
+
+</body>
+
+</html>

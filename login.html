@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>StackHaus - Authorization Gate</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+<script>
+tailwind.config = {
+theme:{
+extend:{
+colors:{
+primary:"#e67e22",
+soft:"#f5f3ef"
+},
+fontFamily:{
+display:["Inter","sans-serif"]
+},
+borderRadius:{
+lg:"12px",
+xl:"18px"
+}
+}
+}
+}
+</script>
+
+<style>
+body {
+  font-family:'Inter', sans-serif;
+}
+
+input, textarea {
+  background:#ffffff;
+  border:1px solid #e5e5e5;
+  color:#333;
+  border-radius:8px;
+  text-align:center;
+  letter-spacing:.05em;
+}
+
+input:focus, textarea:focus {
+  outline:none;
+  border-color:#e67e22;
+  box-shadow:0 0 0 2px rgba(230,126,34,0.15);
+}
+
+.scan-line{
+animation:scan 3s linear infinite;
+}
+
+@keyframes scan{
+0%{top:0%;opacity:0;}
+10%{opacity:1;}
+90%{opacity:1;}
+100%{top:100%;opacity:0;}
+}
+
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:#1a1a1a;}
+::-webkit-scrollbar-thumb{background:#e67e22;}
+</style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-900 min-h-screen flex flex-col">
+
+<div class="relative flex flex-col min-h-screen w-full max-w-[1440px] mx-auto">
+
+<header class="flex items-center justify-between px-6 py-5 border-b bg-white sticky top-0 z-50">
+
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl">grid_view</span>
+
+<a href="index.html"
+class="text-m font-semibold tracking-wide">
+StackHaus
+</a>
+
+</div>
+
+<nav class="hidden md:flex items-center gap-12">
+
+<a class="text-s font-semibold text-primary"
+href="manifesto.html">ABOUT</a>
+
+<a class="text-s font-semibold text-gray-600 hover:text-primary"
+href="case-studies.html">GALLERY</a>
+
+<a class="text-s font-semibold text-gray-600 hover:text-primary"
+href="contact.html">CONTACT</a>
+
+</nav>
+
+<a href="login.html"
+class="bg-primary text-white text-sm px-5 py-2 rounded-lg hover:opacity-90 transition">
+Return to Boot
+</a>
+
+</header>
+
+<main class="flex-grow flex flex-col items-center justify-center px-6 md:px-12 py-12 relative">
+
+<div class="max-w-sm w-full border border-gray-200 p-6 rounded-xl bg-white dark:bg-background-dark/70 shadow-lg relative">
+
+<h1 class="text-2xl font-bold text-gray-900 dark:text-gray-600 mb-2 text-center">
+Access StackHaus Portal
+</h1>
+
+<form class="space-y-8 w-full">
+
+<div class="space-y-8">
+
+<div>
+<label class="block text-xs uppercase tracking-wide text-gray-500 mb-1 text-center">
+Operative ID / Email
+</label>
+<input type="text" class="w-full p-3 text-sm" placeholder="ID-XXXX or EMAIL">
+</div>
+
+<div>
+<label class="block text-xs uppercase tracking-wide text-gray-500 mb-1 text-center">
+Passkey
+</label>
+<input type="password" class="w-full p-3 text-sm" placeholder="••••••••">
+</div>
+
+</div>
+
+<div class="relative w-16 h-16 mx-auto border border-gray-200 rounded-full flex items-center justify-center overflow-hidden my-4 group cursor-pointer">
+<span class="material-symbols-outlined text-3xl text-gray-600 group-hover:text-primary transition-colors">
+fingerprint
+</span>
+<div class="absolute top-0 left-0 w-full h-1 bg-primary/50 shadow-[0_0_10px_#e67e22] scan-line"></div>
+</div>
+
+<div class="grid grid-cols-2 gap-3">
+
+<button type="button" id="loginButton"
+class="w-full bg-primary text-white font-semibold uppercase text-s tracking-wide py-3 px-6 rounded-lg hover:opacity-90 transition flex items-center justify-center gap-2 group">
+Login
+<span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">
+login
+</span>
+</button>
+
+<button type="button" id="signupButton"
+class="w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-white font-semibold uppercase text-s tracking-wide py-3 px-6 rounded-lg hover:opacity-90 transition flex items-center justify-center gap-2 group">
+Sign Up
+<span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">
+person_add
+</span>
+</button>
+
+</div>
+
+</form>
+</div>
+</main>
+
+<footer class="border-t px-6 py-4 text-xs text-gray-500 flex justify-between items-end">
+<div class="flex flex-col gap-1">
+<span>© 2024 StackHaus Systems</span>
+<span>Auth Gate V.2</span>
+</div>
+<div class="text-right hidden sm:block">
+<div>[LAT: 0.00]</div>
+<div>[LOAD: 0.04%]</div>
+</div>
+</footer>
+
+</div>
+
+<script type="module">
+  import { AuthApi } from "../../app/firebaseClient.js";
+
+  const loginButton = document.getElementById("loginButton");
+  const signupButton = document.getElementById("signupButton");
+
+  let authInProgress = false;
+
+  async function handleGoogleLogin() {
+    if (authInProgress) return;
+
+    authInProgress = true;
+    loginButton.disabled = true;
+    signupButton.disabled = true;
+
+    try {
+      await AuthApi.signInWithGoogle();
+      window.location.href = "../../app/app.html";
+    } catch (err) {
+      console.error("Google sign-in failed:", err);
+
+      if (
+        err?.code === "auth/cancelled-popup-request" ||
+        err?.code === "auth/popup-closed-by-user"
+      ) {
+        alert("The Google sign-in popup was interrupted. Please try again and complete the popup once.");
+      } else {
+        alert(err?.message || "Google sign-in failed.");
+      }
+    } finally {
+      authInProgress = false;
+      loginButton.disabled = false;
+      signupButton.disabled = false;
+    }
+  }
+
+  loginButton?.addEventListener("click", handleGoogleLogin);
+  signupButton?.addEventListener("click", handleGoogleLogin);
+</script>
+
+</body>
+</html>

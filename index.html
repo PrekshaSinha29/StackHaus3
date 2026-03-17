@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>StackHaus</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet"/>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+
+tailwind.config = {
+theme: {
+extend: {
+colors: {
+primary:"#e67e22",
+soft:"#f5f3ef"
+},
+fontFamily:{
+display:["Inter","sans-serif"]
+},
+borderRadius:{
+lg:"12px",
+xl:"20px"
+}
+}
+}
+}
+
+</script>
+
+</head>
+
+
+
+<body class="bg-white text-gray-800 font-display min-h-screen flex flex-col">
+
+<!-- CONTAINER -->
+
+<div class="flex flex-col min-h-screen max-w-[1400px] mx-auto w-full">
+
+
+
+
+<!-- HEADER -->
+
+<header class="flex items-center justify-between px-6 py-5 border-b bg-white sticky top-0 z-50">
+
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-xl">grid_view</span>
+
+<a href="index.html"
+class="text-m font-semibold tracking-wide">
+
+StackHaus
+
+</a>
+
+</div>
+
+
+<nav class="hidden md:flex items-center gap-12">
+
+<a class="text-s font-semibold text-primary"
+href="manifesto.html">ABOUT</a>
+
+<a class="text-s font-semibold text-gray-600 hover:text-primary"
+href="case-studies.html">GALLERY</a>
+
+<a class="text-s font-semibold text-gray-600 hover:text-primary"
+href="contact.html">CONTACT</a>
+
+</nav>
+
+<a href="login.html"
+class="bg-primary text-white text-sm px-5 py-2 rounded-lg hover:opacity-90 transition">
+
+Access Portal
+
+</a>
+
+</header>
+
+
+
+
+<!-- HERO -->
+
+<main class="flex-grow">
+
+
+<section class="bg-soft py-10">
+
+<div class="grid md:grid-cols-0 gap-16 items-center px-5 max-w-7xl mx-auto">
+
+<!-- TEXT -->
+
+<div>
+
+<h1 class="text-5xl md:text-6xl font-bold leading-tight mb-5">
+
+Your Space,<br>
+
+<span class="text-primary">Your Way.</span>
+
+</h1>
+
+
+<p class="text-gray-600 text-lg mb-5 max-w-md">
+
+Design your perfect bookshelf using the StackHaus configurator.
+Modular, sustainable shelving built for your space.
+
+</p>
+
+
+
+<div class="flex gap-5">
+
+
+<a href="login.html"
+class="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:opacity-90">
+
+Start Designing
+
+</a>
+
+
+<a href="case-studies.html"
+class="border px-6 py-3 rounded-lg text-gray-700 hover:bg-gray-100">
+
+View Gallery
+
+</a>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+
+<!-- HOW IT WORKS -->
+
+<section class="py-5 px-8">
+
+<div class="max-w-6xl mx-auto text-center">
+
+
+<h2 class="text-3xl font-semibold mb-3">
+
+How it Works
+
+</h2>
+
+
+<p class="text-gray-500 mb-12">
+
+Three simple steps to bring your vision to life.
+
+</p>
+
+
+
+<div class="grid md:grid-cols-3 gap-8">
+
+
+
+<!-- CARD 1 -->
+
+<div class="bg-soft p-8 rounded-xl text-left">
+
+<div class="w-10 h-10 bg-primary/20 text-primary flex items-center justify-center rounded-md mb-4">
+
+1
+
+</div>
+
+<h3 class="font-semibold mb-2">
+
+Design
+
+</h3>
+
+<p class="text-gray-600 text-sm">
+
+Use our professional 3D tool to map out your space and define your bookshelf dimensions.
+
+</p>
+
+</div>
+
+
+
+
+<!-- CARD 2 -->
+
+<div class="bg-soft p-8 rounded-xl text-left">
+
+<div class="w-10 h-10 bg-primary/20 text-primary flex items-center justify-center rounded-md mb-4">
+
+2
+
+</div>
+
+<h3 class="font-semibold mb-2">
+
+Customize
+
+</h3>
+
+<p class="text-gray-600 text-sm">
+
+Choose materials, finishes, and configurations tailored to your interior.
+
+</p>
+
+</div>
+
+
+
+
+<!-- CARD 3 -->
+
+<div class="bg-soft p-8 rounded-xl text-left">
+
+<div class="w-10 h-10 bg-primary/20 text-primary flex items-center justify-center rounded-md mb-4">
+
+3
+
+</div>
+
+<h3 class="font-semibold mb-2">
+
+Order
+
+</h3>
+
+<p class="text-gray-600 text-sm">
+
+We build and deliver your StackHaus system ready for easy assembly.
+
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+
+
+
+<!-- FOOTER -->
+
+<footer class="border-t px-8 py-6 text-sm text-gray-500 flex justify-between">
+
+<div>
+
+© 2026 StackHaus
+
+</div>
+
+<div>
+
+Modular Shelving Systems
+
+</div>
+
+</footer>
+
+
+
+</div>
+
+</body>
+
+</html>

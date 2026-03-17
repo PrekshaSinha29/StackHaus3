@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Nomadic Engine - Occupancy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#e60000",
+                        "background-light": "#f8f5f5",
+                        "background-dark": "#050101",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "mono": ["monospace"]
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, rgba(230, 0, 0, 0.1) 0.5px, transparent 0.5px),
+                linear-gradient(to bottom, rgba(230, 0, 0, 0.1) 0.5px, transparent 0.5px);
+        }
+
+        .glow-radial {
+            background: radial-gradient(circle at bottom left, rgba(230, 0, 0, 0.25) 0%, transparent 40%);
+        }
+
+        .occupant-card {
+            position: relative;
+        }
+
+        .occupant-card:hover {
+            border-color: #e60000;
+            box-shadow: 0 0 15px rgba(230, 0, 0, 0.1);
+        }
+
+        .occupant-card:hover .occupant-icon,
+        .occupant-card:hover .occupant-label,
+        .occupant-card:hover .occupant-title,
+        .occupant-card:hover .occupant-detail {
+            color: #e60000;
+        }
+
+        .occupant-card:hover .occupant-detail {
+            border-color: rgba(230, 0, 0, 0.2);
+        }
+
+        .occupant-card.selected {
+            border-color: #e60000;
+            background: rgba(230, 0, 0, 0.05);
+        }
+
+        .occupant-card .selected-badge {
+            display: none;
+        }
+
+        .occupant-card.selected .selected-badge {
+            display: flex;
+        }
+
+        .occupant-card.selected .occupant-icon {
+            color: #e60000;
+        }
+
+        .occupant-card.selected .occupant-label {
+            color: #e60000;
+        }
+
+        .occupant-card.selected .occupant-title {
+            color: #fff;
+        }
+
+        .occupant-card.selected .occupant-detail {
+            border-color: rgba(230, 0, 0, 0.2);
+            color: #9ca3af;
+        }
+
+        .occupant-card .corner-accent {
+            border-color: transparent;
+        }
+
+        .occupant-card.selected .corner-accent {
+            border-color: #e60000;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-white overflow-x-hidden min-h-screen flex flex-col relative selection:bg-primary selection:text-white">
+    <script type="module" src="./js/main.js"></script>
+    <div class="fixed inset-0 z-0 bg-grid pointer-events-none opacity-50"></div>
+    <div class="fixed inset-0 z-0 glow-radial pointer-events-none"></div>
+
+    <div
+        class="relative z-10 flex flex-col min-h-screen w-full border-x border-primary/20 max-w-[1440px] mx-auto box-content">
+        <!-- Header -->
+        <header
+            class="flex items-center justify-between px-6 py-5 border-b border-primary/20 bg-background-dark/80 backdrop-blur-sm sticky top-0 z-50">
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-primary text-xl">grid_4x4</span>
+                <a href="index.html"
+                    class="text-sm font-bold tracking-[0.32em] uppercase text-red-500/80 hover:text-red-500 hover:underline  underline-offset-4 transition-colors duration-200 animate-pulse">
+                    Nomadic Engine
+                </a>
+            </div>
+            <div class="flex items-center gap-6 text-[10px] tracking-widest font-mono text-primary">
+                <span class="flex items-center gap-2"><span
+                        class="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span> NET_UPLINK: ACTIVE</span>
+                <span class="flex items-center gap-2"><span class="material-symbols-outlined text-xs">memory</span> MEM:
+                    64TB</span>
+                <span class="flex items-center gap-2"><span class="material-symbols-outlined text-xs">lock</span> SEC:
+                    ENCRYPTED</span>
+                <button data-logout-btn
+                    class="ml-4 px-3 py-1 border border-primary/50 hover:border-primary hover:bg-primary/10 transition-all text-xs font-mono">
+                    LOGOUT
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-grow px-6 md:px-12 flex flex-col justify-center relative">
+
+            <h1 class="text-4xl md:text-5xl font-bold uppercase tracking-tight mb-12">Number of Occupants</h1>
+
+            <!-- Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 relative z-10">
+
+                <!-- Card 1: Individual -->
+                <button data-occupant-card
+                    class="occupant-card selected relative h-96 p-6 flex flex-col justify-between text-left transition-all border border-white/10">
+                    <div class="corner-accent absolute top-0 left-0 w-2 h-2 border-l border-t"></div>
+                    <div class="corner-accent absolute top-0 right-0 w-2 h-2 border-r border-t"></div>
+                    <div class="corner-accent absolute bottom-0 left-0 w-2 h-2 border-l border-b"></div>
+                    <div class="corner-accent absolute bottom-0 right-0 w-2 h-2 border-r border-b"></div>
+
+                    <div class="flex justify-between items-start">
+                        <span class="occupant-icon material-symbols-outlined text-4xl text-gray-600 transition-colors">person</span>
+                        <div class="selected-badge bg-primary/20 text-primary border border-primary text-[9px] font-bold px-2 py-0.5 uppercase tracking-wider flex items-center gap-1">
+                            <span class="w-1 h-1 bg-primary rounded-full animate-pulse"></span> Active
+                        </div>
+                    </div>
+
+                    <div class="mt-auto">
+                        <div class="occupant-label text-[9px] uppercase tracking-widest text-gray-600 mb-2 font-mono transition-colors">Selection_01</div>
+                        <h3 class="occupant-title text-2xl font-bold uppercase tracking-tight text-gray-600 mb-4 transition-colors">Individual</h3>
+                        <div class="occupant-detail border-t border-white/10 pt-4 font-mono text-sm text-gray-600 transition-colors">
+                            [01 UNIT]
+                        </div>
+                    </div>
+                </button>
+
+                <!-- Card 2: Couple -->
+                <button data-occupant-card
+                    class="occupant-card relative h-96 p-6 flex flex-col justify-between text-left transition-all border border-white/10">
+                    <div class="corner-accent absolute top-0 left-0 w-2 h-2 border-l border-t"></div>
+                    <div class="corner-accent absolute top-0 right-0 w-2 h-2 border-r border-t"></div>
+                    <div class="corner-accent absolute bottom-0 left-0 w-2 h-2 border-l border-b"></div>
+                    <div class="corner-accent absolute bottom-0 right-0 w-2 h-2 border-r border-b"></div>
+
+                    <div class="flex justify-between items-start">
+                        <span class="occupant-icon material-symbols-outlined text-4xl text-gray-600 transition-colors">group</span>
+                        <div class="selected-badge bg-primary/20 text-primary border border-primary text-[9px] font-bold px-2 py-0.5 uppercase tracking-wider flex items-center gap-1">
+                            <span class="w-1 h-1 bg-primary rounded-full animate-pulse"></span> Active
+                        </div>
+                    </div>
+
+                    <div class="mt-auto">
+                        <div class="occupant-label text-[9px] uppercase tracking-widest text-gray-600 mb-2 font-mono transition-colors">Selection_02</div>
+                        <h3 class="occupant-title text-2xl font-bold uppercase tracking-tight text-gray-600 mb-4 transition-colors">Couple</h3>
+                        <div class="occupant-detail border-t border-white/10 pt-4 font-mono text-sm text-gray-600 transition-colors">
+                            [02 UNITS]
+                        </div>
+                    </div>
+                </button>
+
+                <!-- Card 3: Small Family -->
+                <button data-occupant-card
+                    class="occupant-card relative h-96 p-6 flex flex-col justify-between text-left transition-all border border-white/10">
+                    <div class="corner-accent absolute top-0 left-0 w-2 h-2 border-l border-t"></div>
+                    <div class="corner-accent absolute top-0 right-0 w-2 h-2 border-r border-t"></div>
+                    <div class="corner-accent absolute bottom-0 left-0 w-2 h-2 border-l border-b"></div>
+                    <div class="corner-accent absolute bottom-0 right-0 w-2 h-2 border-r border-b"></div>
+
+                    <div class="flex justify-between items-start">
+                        <span class="occupant-icon material-symbols-outlined text-4xl text-gray-600 transition-colors">family_restroom</span>
+                        <div class="selected-badge bg-primary/20 text-primary border border-primary text-[9px] font-bold px-2 py-0.5 uppercase tracking-wider flex items-center gap-1">
+                            <span class="w-1 h-1 bg-primary rounded-full animate-pulse"></span> Active
+                        </div>
+                    </div>
+
+                    <div class="mt-auto">
+                        <div class="occupant-label text-[9px] uppercase tracking-widest text-gray-600 mb-2 font-mono transition-colors">Selection_03</div>
+                        <h3 class="occupant-title text-2xl font-bold uppercase tracking-tight text-gray-600 mb-4 transition-colors">Small Family</h3>
+                        <div class="occupant-detail border-t border-white/10 pt-4 font-mono text-sm text-gray-600 transition-colors">
+                            [03-04 UNITS]
+                        </div>
+                    </div>
+                </button>
+
+                <!-- Card 4: Large Team -->
+                <button data-occupant-card
+                    class="occupant-card relative h-96 p-6 flex flex-col justify-between text-left transition-all border border-white/10">
+                    <div class="corner-accent absolute top-0 left-0 w-2 h-2 border-l border-t"></div>
+                    <div class="corner-accent absolute top-0 right-0 w-2 h-2 border-r border-t"></div>
+                    <div class="corner-accent absolute bottom-0 left-0 w-2 h-2 border-l border-b"></div>
+                    <div class="corner-accent absolute bottom-0 right-0 w-2 h-2 border-r border-b"></div>
+
+                    <div class="flex justify-between items-start">
+                        <span class="occupant-icon material-symbols-outlined text-4xl text-gray-600 transition-colors">diversity_3</span>
+                        <div class="selected-badge bg-primary/20 text-primary border border-primary text-[9px] font-bold px-2 py-0.5 uppercase tracking-wider flex items-center gap-1">
+                            <span class="w-1 h-1 bg-primary rounded-full animate-pulse"></span> Active
+                        </div>
+                    </div>
+
+                    <div class="mt-auto">
+                        <div class="occupant-label text-[9px] uppercase tracking-widest text-gray-600 mb-2 font-mono transition-colors">Selection_04</div>
+                        <h3 class="occupant-title text-2xl font-bold uppercase tracking-tight text-gray-600 mb-4 transition-colors">Large Team</h3>
+                        <div class="occupant-detail border-t border-white/10 pt-4 font-mono text-sm text-gray-600 transition-colors">
+                            [05-10 UNITS]
+                        </div>
+                    </div>
+                </button>
+
+            </div>
+
+            <!-- Bottom Section -->
+            <div class="flex flex-col items-center justify-center relative mt-8 mb-12">
+                <!-- Large Background Number -->
+                <div
+                    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] text-[200px] font-bold text-white/[0.02] pointer-events-none select-none leading-none z-0">
+                    01
+                </div>
+
+                <div class="relative z-10 text-center max-w-lg">
+                    <div class="flex items-center justify-center gap-4 mb-4">
+                        <div class="h-[1px] w-12 bg-primary/50"></div>
+                        <div class="text-[10px] text-primary uppercase tracking-[0.2em] font-bold">Configuration
+                            Parameters</div>
+                        <div class="h-[1px] w-12 bg-primary/50"></div>
+                    </div>
+                    <p class="text-xl font-light text-gray-300">
+                        Occupancy directly affects spatial scale and structural logic.
+                    </p>
+                </div>
+
+                <!-- Footer Actions -->
+                <div class="flex items-center gap-6 mt-16 relative z-10">
+                    <button
+                        class="border border-white/20 hover:border-white text-gray-400 hover:text-white px-8 py-3 text-xs font-bold tracking-[0.2em] uppercase transition-all">
+                        Cancel
+                    </button>
+                    <button onclick="window.location.href='duration.html'"
+                        class="bg-primary hover:bg-red-600 text-white px-8 py-3 text-xs font-bold tracking-[0.2em] uppercase transition-all flex items-center gap-2">
+                        Confirm Selection
+                        <span class="material-symbols-outlined text-sm">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</body>
+
+</html>
